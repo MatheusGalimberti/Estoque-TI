@@ -1,4 +1,4 @@
-package br.com.cnec.estoque_TI;
+package br.com.cnec.estoqueti;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
