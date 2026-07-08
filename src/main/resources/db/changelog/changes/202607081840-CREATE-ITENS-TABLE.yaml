@@ -1,0 +1,120 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202607081840-CREATE-ITENS-TABLE
+      author: matheus
+      changes:
+        - createTable:
+            tableName: itens
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: nome
+                  type: VARCHAR(150)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: descricao
+                  type: VARCHAR(255)
+
+              - column:
+                  name: categoria_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: estoque_atual_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: condicao_atual_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: tipo_controle
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: patrimonio
+                  type: VARCHAR(50)
+
+              - column:
+                  name: numero_serie
+                  type: VARCHAR(100)
+
+              - column:
+                  name: quantidade
+                  type: INT
+                  defaultValueNumeric: 1
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: observacoes
+                  type: TEXT
+
+              - column:
+                  name: ativo
+                  type: BIT
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: criado_em
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: atualizado_em
+                  type: TIMESTAMP
+
+        - addForeignKeyConstraint:
+            baseTableName: itens
+            baseColumnNames: categoria_id
+            referencedTableName: categorias
+            referencedColumnNames: id
+            constraintName: fk_itens_categorias
+
+        - addForeignKeyConstraint:
+            baseTableName: itens
+            baseColumnNames: estoque_atual_id
+            referencedTableName: estoques
+            referencedColumnNames: id
+            constraintName: fk_itens_estoques
+
+        - addForeignKeyConstraint:
+            baseTableName: itens
+            baseColumnNames: condicao_atual_id
+            referencedTableName: condicoes_item
+            referencedColumnNames: id
+            constraintName: fk_itens_condicoes_item
+
+        - createIndex:
+            tableName: itens
+            indexName: idx_itens_patrimonio
+            columns:
+              - column:
+                  name: patrimonio
+
+        - createIndex:
+            tableName: itens
+            indexName: idx_itens_numero_serie
+            columns:
+              - column:
+                  name: numero_serie
