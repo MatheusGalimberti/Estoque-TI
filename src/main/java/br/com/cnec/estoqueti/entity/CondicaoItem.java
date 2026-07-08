@@ -17,13 +17,13 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "estoques")
+@Table(name = "condicoes_item")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Estoque {
+public class CondicaoItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,11 +32,11 @@ public class Estoque {
     @Column(nullable = false, length = 100)
     private String nome;
 
-    @Column(nullable = false)
+    @Column(length = 255)
     private String descricao;
 
     @Column(nullable = false)
-    private Boolean ativo;
+    private Boolean ativo = true;
 
     @Column(name = "criado_em", nullable = false)
     private LocalDateTime criadoEm;
@@ -48,7 +48,7 @@ public class Estoque {
     public void prePersist() {
         criadoEm = LocalDateTime.now();
 
-        if (ativo == null ) {
+        if (ativo == null) {
             ativo = true;
         }
     }
@@ -57,7 +57,4 @@ public class Estoque {
     public void preUpdate() {
         atualizadoEm = LocalDateTime.now();
     }
-
-
-
 }
