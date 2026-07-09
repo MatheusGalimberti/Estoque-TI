@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202607091922-ADD-STATUS-ITEM-TO-ITENS-TABLE
+      author: matheus
+      changes:
+        - addColumn:
+            tableName: itens
+            columns:
+              - column:
+                  name: status_item
+                  type: VARCHAR(30)
+                  defaultValue: DISPONIVEL
+                  constraints:
+                    nullable: false

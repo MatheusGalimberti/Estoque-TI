@@ -1,5 +1,6 @@
 package br.com.cnec.estoqueti.entity;
 
+import br.com.cnec.estoqueti.enums.StatusItem;
 import br.com.cnec.estoqueti.enums.TipoControleItem;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -56,6 +57,10 @@ public class Item {
     @Column(name = "tipo_controle", nullable = false, length = 30)
     private TipoControleItem tipoControle;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status_item", nullable = false, length = 30)
+    private StatusItem statusItem = StatusItem.DISPONIVEL;
+
     @Column(length = 50)
     private String patrimonio;
 
@@ -87,6 +92,10 @@ public class Item {
 
         if (quantidade == null) {
             quantidade = 1;
+        }
+
+        if(statusItem == null){
+            statusItem = StatusItem.DISPONIVEL;
         }
     }
 
