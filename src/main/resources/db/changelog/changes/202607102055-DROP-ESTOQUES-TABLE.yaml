@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202607102055-DROP-ESTOQUES-TABLE
+      author: matheus
+      changes:
+        - dropTable:
+            tableName: estoques

@@ -13,3 +13,12 @@ databaseChangeLog:
 
   - include:
       file: db/changelog/changes/202607091922-ADD-STATUS-ITEM-TO-ITENS-TABLE.yaml
+
+  - include:
+      file: db/changelog/changes/202607102040-CREATE-LOCAIS-TABLE.yaml
+
+  - include:
+      file: db/changelog/changes/202607102043-REPLACE-ESTOQUE-WITH-LOCAL-IN-ITENS.yaml
+
+  - include:
+      file: db/changelog/changes/202607102055-DROP-ESTOQUES-TABLE.yaml

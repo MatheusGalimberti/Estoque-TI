@@ -1,0 +1,48 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202607102040-CREATE-LOCAIS-TABLE
+      author: matheus
+      changes:
+        - createTable:
+            tableName: locais
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: nome
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: tipo
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: descricao
+                  type: VARCHAR(255)
+
+              - column:
+                  name: ativo
+                  type: BIT
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: criado_em
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: atualizado_em
+                  type: TIMESTAMP

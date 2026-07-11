@@ -46,8 +46,8 @@ public class Item {
     private Categoria categoria;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "estoque_atual_id", nullable = false)
-    private Estoque estoqueAtual;
+    @JoinColumn(name = "local_atual_id", nullable = false)
+    private Local localAtual;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "condicao_atual_id", nullable = false)
