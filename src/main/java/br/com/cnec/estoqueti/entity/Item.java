@@ -2,6 +2,7 @@ package br.com.cnec.estoqueti.entity;
 
 import br.com.cnec.estoqueti.enums.StatusItem;
 import br.com.cnec.estoqueti.enums.TipoControleItem;
+import br.com.cnec.estoqueti.enums.TipoRegistroItem;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -35,15 +36,13 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 150)
-    private String nome;
-
-    @Column(length = 255)
-    private String descricao;
-
     @ManyToOne(optional = false)
-    @JoinColumn(name = "categoria_id", nullable = false)
-    private Categoria categoria;
+    @JoinColumn(name = "modelo_item_id", nullable = false)
+    private ModeloItem modeloItem;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_controle", nullable = false, length = 20)
+    private TipoControleItem tipoControleItem;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "local_atual_id", nullable = false)
@@ -54,8 +53,8 @@ public class Item {
     private CondicaoItem condicaoAtual;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipo_controle", nullable = false, length = 30)
-    private TipoControleItem tipoControle;
+    @Column(name = "tipo_registro", nullable = false, length = 30)
+    private TipoRegistroItem tipoRegistro;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status_item", nullable = false, length = 30)
@@ -94,8 +93,12 @@ public class Item {
             quantidade = 1;
         }
 
-        if(statusItem == null){
+        if (statusItem == null) {
             statusItem = StatusItem.DISPONIVEL;
+        }
+
+        if (tipoRegistro == null) {
+            tipoRegistro = TipoRegistroItem.UNIDADE;
         }
     }
 
