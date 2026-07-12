@@ -17,13 +17,13 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "condicoes_item")
+@Table(name = "condicoes")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CondicaoItem {
+public class Condicao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +35,7 @@ public class CondicaoItem {
     @Column(length = 255)
     private String descricao;
 
+    @Builder.Default
     @Column(nullable = false)
     private Boolean ativo = true;
 

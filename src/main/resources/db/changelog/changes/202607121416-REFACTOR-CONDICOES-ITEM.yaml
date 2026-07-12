@@ -1,0 +1,95 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202607121416-REFACTOR-CONDICOES-ITEM
+      author: matheus
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: itens
+            constraintName: fk_itens_condicoes_item
+
+        - dropColumn:
+            tableName: itens
+            columnName: condicao_atual_id
+
+        - renameTable:
+            oldTableName: condicoes_item
+            newTableName: condicoes
+
+        - createTable:
+            tableName: registros_condicao
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: item_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: condicao_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: observacao
+                  type: TEXT
+
+              - column:
+                  name: iniciada_em
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: resolvida_em
+                  type: TIMESTAMP
+
+              - column:
+                  name: ativa
+                  type: BIT
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: registros_condicao
+            baseColumnNames: item_id
+            referencedTableName: itens
+            referencedColumnNames: id
+            constraintName: fk_registros_condicao_itens
+
+        - addForeignKeyConstraint:
+            baseTableName: registros_condicao
+            baseColumnNames: condicao_id
+            referencedTableName: condicoes
+            referencedColumnNames: id
+            constraintName: fk_registros_condicao_condicoes
+
+        - createIndex:
+            tableName: registros_condicao
+            indexName: idx_registros_condicao_item
+            columns:
+              - column:
+                  name: item_id
+
+        - createIndex:
+            tableName: registros_condicao
+            indexName: idx_registros_condicao_condicao
+            columns:
+              - column:
+                  name: condicao_id
+
+        - createIndex:
+            tableName: registros_condicao
+            indexName: idx_registros_condicao_ativa
+            columns:
+              - column:
+                  name: ativa

@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -22,6 +23,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "itens")
@@ -42,20 +45,21 @@ public class Item {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_controle", nullable = false, length = 20)
-    private TipoControleItem tipoControleItem;
+    private TipoControleItem tipoControle;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "local_atual_id", nullable = false)
     private Local localAtual;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "condicao_atual_id", nullable = false)
-    private CondicaoItem condicaoAtual;
+    @Builder.Default
+    @OneToMany(mappedBy = "item")
+    private List<RegistroCondicao> registrosCondicao = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_registro", nullable = false, length = 30)
     private TipoRegistroItem tipoRegistro;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(name = "status_item", nullable = false, length = 30)
     private StatusItem statusItem = StatusItem.DISPONIVEL;
@@ -66,12 +70,14 @@ public class Item {
     @Column(name = "numero_serie", length = 100)
     private String numeroSerie;
 
+    @Builder.Default
     @Column(nullable = false)
     private Integer quantidade = 1;
 
     @Column(columnDefinition = "TEXT")
     private String observacoes;
 
+    @Builder.Default
     @Column(nullable = false)
     private Boolean ativo = true;
 
@@ -83,7 +89,9 @@ public class Item {
 
     @PrePersist
     public void prePersist() {
-        criadoEm = LocalDateTime.now();
+        if (criadoEm == null) {
+            criadoEm = LocalDateTime.now();
+        }
 
         if (ativo == null) {
             ativo = true;
