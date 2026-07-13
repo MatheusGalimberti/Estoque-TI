@@ -1,0 +1,79 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202607131501-CREATE-ITEM-COMPONENTES-TABLE
+      author: matheus
+      changes:
+        - createTable:
+            tableName: item_componentes
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: item_pai_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: item_componente_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: instalado_em
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: removido_em
+                  type: TIMESTAMP
+
+              - column:
+                  name: ativo
+                  type: BIT
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: item_componentes
+            baseColumnNames: item_pai_id
+            referencedTableName: itens
+            referencedColumnNames: id
+            constraintName: fk_item_componentes_item_pai_id
+
+        - addForeignKeyConstraint:
+            baseTableName: item_componentes
+            baseColumnNames: item_componente_id
+            referencedTableName: itens
+            referencedColumnNames: id
+            constraintName: fk_item_componentes_item_componente_id
+
+        - createIndex:
+            tableName: item_componentes
+            indexName: idx_item_componentes_item_pai
+            columns:
+              - column:
+                  name: item_pai_id
+
+        - createIndex:
+            tableName: item_componentes
+            indexName: idx_item_componentes_item_componente
+            columns:
+              - column:
+                  name: item_componente_id
+
+        - createIndex:
+            tableName: item_componentes
+            indexName: idx_item_componentes_ativo
+            columns:
+              - column:
+                  name: ativo

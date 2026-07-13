@@ -31,3 +31,6 @@ databaseChangeLog:
 
   - include:
       file: db/changelog/changes/202607121416-REFACTOR-CONDICOES-ITEM.yaml
+
+  - include:
+      file: db/changelog/changes/202607131501-CREATE-ITEM-COMPONENTES-TABLE.yaml
