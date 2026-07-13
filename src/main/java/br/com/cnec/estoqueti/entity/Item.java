@@ -78,6 +78,14 @@ public class Item {
     private String observacoes;
 
     @Builder.Default
+    @OneToMany(mappedBy = "itemPai")
+    List<ItemComponente> vinculosDeComponetes = new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "itemComponente")
+    List<ItemComponente> historicoComoComponente = new ArrayList<>();
+
+    @Builder.Default
     @Column(nullable = false)
     private Boolean ativo = true;
 
