@@ -23,7 +23,7 @@ public class ModeloItemService {
     }
 
 
-    public ModeloItem cadastrar (ModeloItem modeloItem) {
+    public ModeloItem   cadastrar (ModeloItem modeloItem) {
         validarModelo(modeloItem);
 
         String nomeNormalizado = modeloItem.getNome().trim();
