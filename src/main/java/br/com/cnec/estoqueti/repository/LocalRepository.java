@@ -4,4 +4,10 @@ import br.com.cnec.estoqueti.entity.Local;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LocalRepository extends JpaRepository<Local, Long> {
+    Local findByNome(String nome);
+
+    boolean findByNomeAndAtivoTrue(String nome);
+   boolean existsByNomeIgnoreCaseAndAtivoTrue(String nome);
+    boolean existsByNomeIgnoreCaseAndAtivoFalse(String nome);
+
 }
