@@ -7,6 +7,9 @@ import br.com.cnec.estoqueti.repository.LocalRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class LocalService {
 
@@ -37,6 +40,23 @@ public class LocalService {
 
         return localRepository.save(local);
     }
+
+    public List<Local> listarLocaisAtivos(){
+
+        return localRepository.findAllByAtivoTrue();
+    }
+
+    public Local buscarPorId(Long id) {
+        if (id == null) {
+            throw new RegraNegocioException("O ID do local é obrigatório.");
+        }
+
+        return localRepository.findById(id)
+                .orElseThrow(() ->
+                        new RegraNegocioException("Local não encontrado.")
+                );
+    }
+
 
     private String normalizarNome(String nome){
 
