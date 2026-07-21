@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: drop-ativo-from-registros-condicao
+      author: matheus
+      changes:
+        - dropColumn:
+            tableName: registros_condicao
+            columnName: ativa

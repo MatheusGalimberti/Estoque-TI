@@ -47,18 +47,10 @@ public class RegistroCondicao {
     @Column(name = "resolvida_em")
     private LocalDateTime resolvidaEm;
 
-    @Builder.Default
-    @Column(nullable = false)
-    private Boolean ativa = true;
-
     @PrePersist
     private void prePersist() {
         if (iniciadaEm == null) {
             iniciadaEm = LocalDateTime.now();
-        }
-
-        if (ativa == null) {
-            ativa = true;
         }
     }
 
