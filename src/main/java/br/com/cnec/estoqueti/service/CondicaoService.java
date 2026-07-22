@@ -4,6 +4,7 @@ import br.com.cnec.estoqueti.entity.Condicao;
 import br.com.cnec.estoqueti.exception.RegraNegocioException;
 import br.com.cnec.estoqueti.repository.CondicaoRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class CondicaoService {
         this.condicaoRepository = condicaoRepository;
     }
 
+    @Transactional
     public Condicao cadastrar(Condicao condicao) {
         if (condicao == null) {
             throw new RegraNegocioException("A condição é obrigatória.");
