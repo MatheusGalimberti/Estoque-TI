@@ -35,7 +35,7 @@ class RegistroCondicaoServiceTest {
     private ItemRepository itemRepository;
 
     @InjectMocks
-    private RegistroCondicaoService registroCondicaoService;
+    private br.com.cnec.estoqueti.service.RegistroCondicaoService registroCondicaoService;
 
     private Item item;
     private Condicao condicao;

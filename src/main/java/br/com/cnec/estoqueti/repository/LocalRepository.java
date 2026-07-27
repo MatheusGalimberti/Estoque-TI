@@ -13,4 +13,5 @@ public interface LocalRepository extends JpaRepository<Local, Long> {
     boolean existsByNomeIgnoreCaseAndAtivoFalse(String nome);
     List<Local> findAllByAtivoTrue();
 
+    Long id(Long id);
 }
