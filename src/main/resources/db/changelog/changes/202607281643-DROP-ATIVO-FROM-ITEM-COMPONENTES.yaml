@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202607281230-DROP-ATIVO-FROM-ITEM-COMPONENTES
+      author: matheus
+
+      changes:
+        - dropColumn:
+            tableName: item_componentes
+            columnName: ativo

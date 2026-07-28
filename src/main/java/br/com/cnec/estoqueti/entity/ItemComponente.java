@@ -44,18 +44,10 @@ public class ItemComponente {
     @Column(name = "removido_em")
     private LocalDateTime removidoEm;
 
-    @Builder.Default
-    @Column(nullable = false)
-    private Boolean ativo = true;
-
     @PrePersist
     private void prePersist() {
         if (instaladoEm == null) {
             instaladoEm = LocalDateTime.now();
-        }
-
-        if (ativo == null) {
-            ativo = true;
         }
     }
 }

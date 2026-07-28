@@ -38,3 +38,5 @@ databaseChangeLog:
   - include:
       file: db/changelog/changes/202607201657-DROP-ATIVO-FROM-REGISTRO-CONDICOES.yaml
 
+  - include:
+      file: db/changelog/changes/202607281643-DROP-ATIVO-FROM-ITEM-COMPONENTES.yaml

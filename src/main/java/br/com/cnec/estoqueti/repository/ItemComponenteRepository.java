@@ -8,11 +8,6 @@ import java.util.Optional;
 
 public interface ItemComponenteRepository extends JpaRepository<ItemComponente, Long> {
 
-
-    List<ItemComponente> findByItemPaiIdAndAtivoTrue(Long itemId);
-
     List<ItemComponente> findByItemComponenteId (Long itemId);
 
-    Optional<ItemComponente> findByItemComponenteIdAndAtivoTrue(
-            Long itemComponenteId);
 }
