@@ -3,6 +3,7 @@ package br.com.cnec.estoqueti.entity;
 import br.com.cnec.estoqueti.enums.StatusItem;
 import br.com.cnec.estoqueti.enums.TipoControleItem;
 import br.com.cnec.estoqueti.enums.TipoRegistroItem;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -78,12 +79,12 @@ public class Item {
     private String observacoes;
 
     @Builder.Default
-    @OneToMany(mappedBy = "itemPai")
-    List<ItemComponente> vinculosDeComponetes = new ArrayList<>();
+    @OneToMany(mappedBy = "itemPai", cascade = CascadeType.ALL)
+    private List<ItemComponente> vinculosDeComponentes = new ArrayList<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "itemComponente")
-    List<ItemComponente> historicoComoComponente = new ArrayList<>();
+    private List<ItemComponente> historicoComoComponente = new ArrayList<>();
 
     @Builder.Default
     @Column(nullable = false)

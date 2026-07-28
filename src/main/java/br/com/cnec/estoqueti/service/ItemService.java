@@ -12,6 +12,7 @@ import br.com.cnec.estoqueti.exception.RegraNegocioException;
 import br.com.cnec.estoqueti.repository.ItemRepository;
 import br.com.cnec.estoqueti.repository.LocalRepository;
 import br.com.cnec.estoqueti.repository.ModeloItemRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -71,42 +72,54 @@ public class ItemService {
         return itemRepository.save(item);
     }
 
+    @Transactional
     public Item mudarStatus(Long idItem, StatusItem status) {
+
+        if(status == null){
+            throw new RegraNegocioException("status é obrigatório");
+        }
+
         Item item = buscarItemPorId(idItem);
 
         item.setStatusItem(status);
 
-        return itemRepository.save(item);
+        return item;
     }
 
+    @Transactional
     public Item moverItem(Long idLocal, Long idItem) {
         Item item = buscarItemPorId(idItem);
 
         Local local = buscarLocalPorId(idLocal);
 
         item.setLocalAtual(local);
-
-        return itemRepository.save(item);
+        return item;
     }
 
-    public void adicionarCondicao(Long idItem, Long idCondicao, String observacao) {
-        Item item = buscarItemPorId(idItem);
+    @Transactional
+    public void adicionarCondicao(Long idItem, Long idCondicao,
+            String observacao
+    ) {
+        buscarItemPorId(idItem);
 
-        RegistroCondicao registro = registroCondicaoService.cadastrar(idItem, idCondicao, observacao);
-
-        item.getRegistrosCondicao().add(registro);
+        registroCondicaoService.cadastrar(
+                idItem,
+                idCondicao,
+                observacao
+        );
     }
 
+    @Transactional
     public void anexarComponenteAoItemPai(Long idItemComponente, Long idItemPai) {
         Item itemComponente = buscarItemPorId(idItemComponente);
 
-        if (!itemComponente.getTipoControle().equals(TipoControleItem.COMPONENTE)) {
+        if (itemComponente.getTipoControle() != TipoControleItem.COMPONENTE) {
             throw new RegraNegocioException("O item a ser anexado precisa ser um Componente");
         }
 
         Item itemPai = buscarItemPorId(idItemPai);
 
-        if (!itemPai.getTipoControle().equals(TipoControleItem.PATRIMONIADO)) {
+        if (itemPai.getTipoControle() != TipoControleItem.PATRIMONIADO) {
             throw new RegraNegocioException("Este item não aceita componentes");
         }
 
@@ -115,7 +128,8 @@ public class ItemService {
                 .itemComponente(itemComponente)
                 .build();
 
-        itemPai.getVinculosDeComponetes().add(componente);
+        itemPai.getVinculosDeComponentes().add(componente);
+        itemRepository.save(itemPai);
     }
 
     private Item buscarItemPorId(Long idItem) {
@@ -123,7 +137,7 @@ public class ItemService {
         if (idItem == null || idItem <= 0) throw new RegraNegocioException("ID do item inválido");
 
         return itemRepository.findById(idItem)
-                .orElseThrow(() -> new RegraNegocioException("ID do item invalido"));
+                .orElseThrow(() -> new RegraNegocioException("Item inexistente"));
     }
 
     private Local buscarLocalPorId(Long idLocal) {
@@ -134,6 +148,10 @@ public class ItemService {
     }
 
     private ModeloItem buscarModeloPorId(Long idModelo) {
+        if (idModelo == null || idModelo <= 0) {
+            throw new RegraNegocioException("ID do modelo inválido");
+        }
+
         return modeloItemRepository.findById(idModelo)
                 .orElseThrow(() -> new RegraNegocioException("Modelo inexistente"));
     }
