@@ -1,68 +1,68 @@
-package br.com.cnec.estoqueti.entity;
+    package br.com.cnec.estoqueti.entity;
 
 
-import br.com.cnec.estoqueti.enums.TipoLocal;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+    import br.com.cnec.estoqueti.enums.TipoLocal;
+    import jakarta.persistence.Column;
+    import jakarta.persistence.Entity;
+    import jakarta.persistence.EnumType;
+    import jakarta.persistence.Enumerated;
+    import jakarta.persistence.GeneratedValue;
+    import jakarta.persistence.GenerationType;
+    import jakarta.persistence.Id;
+    import jakarta.persistence.PrePersist;
+    import jakarta.persistence.PreUpdate;
+    import jakarta.persistence.Table;
+    import lombok.AllArgsConstructor;
+    import lombok.Builder;
+    import lombok.Getter;
+    import lombok.NoArgsConstructor;
+    import lombok.Setter;
 
-import java.time.LocalDateTime;
+    import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "locais")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class Local {
+    @Entity
+    @Table(name = "locais")
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public class Local {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long id;
 
-    @Column(nullable = false, length = 100)
-    private String nome;
+        @Column(nullable = false, length = 100)
+        private String nome;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 30)
-    private TipoLocal tipo;
+        @Enumerated(EnumType.STRING)
+        @Column(nullable = false, length = 30)
+        private TipoLocal tipo;
 
-    @Column(length = 255)
-    private String descricao;
+        @Column(length = 255)
+        private String descricao;
 
-    @Column(nullable = false)
-    private Boolean ativo = true;
+        @Column(nullable = false)
+        private Boolean ativo = true;
 
-    @Column(name = "criado_em", nullable = false)
-    private LocalDateTime criadoEm;
+        @Column(name = "criado_em", nullable = false)
+        private LocalDateTime criadoEm;
 
-    @Column(name = "atualizado_em")
-    private LocalDateTime atualizadoEm;
+        @Column(name = "atualizado_em")
+        private LocalDateTime atualizadoEm;
 
-    @PrePersist
-    public void prePersist() {
-        criadoEm = LocalDateTime.now();
+        @PrePersist
+        public void prePersist() {
+            criadoEm = LocalDateTime.now();
 
-        if (ativo == null) {
-            ativo = true;
+            if (ativo == null) {
+                ativo = true;
+            }
+        }
+
+        @PreUpdate
+        public void preUpdate() {
+            atualizadoEm = LocalDateTime.now();
         }
     }
-
-    @PreUpdate
-    public void preUpdate() {
-        atualizadoEm = LocalDateTime.now();
-    }
-}
