@@ -2,6 +2,8 @@ package br.com.cnec.estoqueti.service;
 
 import br.com.cnec.estoqueti.entity.Local;
 import br.com.cnec.estoqueti.enums.TipoLocal;
+import br.com.cnec.estoqueti.exception.RecursoDuplicadoException;
+import br.com.cnec.estoqueti.exception.RecursoNaoEncontradoException;
 import br.com.cnec.estoqueti.exception.RegraNegocioException;
 import br.com.cnec.estoqueti.repository.LocalRepository;
 import org.springframework.stereotype.Service;
@@ -52,7 +54,7 @@ public class LocalService {
 
         return localRepository.findById(id)
                 .orElseThrow(() ->
-                        new RegraNegocioException("Local não encontrado.")
+                        new RecursoNaoEncontradoException("Local não encontrado.")
                 );
     }
 
@@ -70,14 +72,14 @@ public class LocalService {
     private void validarExistencia(String nome) {
         if (localRepository
                 .existsByNomeIgnoreCaseAndAtivoTrue(nome)) {
-            throw new RegraNegocioException(
+            throw new RecursoDuplicadoException(
                     "Já existe um local ativo com esse nome."
             );
         }
 
         if (localRepository
                 .existsByNomeIgnoreCaseAndAtivoFalse(nome)) {
-            throw new RegraNegocioException(
+            throw new RecursoDuplicadoException(
                     "Esse local já existe, mas está desativado."
             );
         }

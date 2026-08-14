@@ -1,7 +1,14 @@
 package br.com.cnec.estoqueti.exception;
 
-public class ApiError extends RuntimeException {
-    public ApiError(String message) {
-        super(message);
-    }
+import java.time.Instant;
+import java.util.Map;
+
+public record ApiError(
+        Instant timestamp,
+        int status,
+        String error,
+        String mensagem,
+        String path,
+        Map<String, String> campos
+) {
 }
