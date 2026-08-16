@@ -1,6 +1,8 @@
 package br.com.cnec.estoqueti.service;
 
 import br.com.cnec.estoqueti.entity.Categoria;
+import br.com.cnec.estoqueti.exception.RecursoDuplicadoException;
+import br.com.cnec.estoqueti.exception.RecursoNaoEncontradoException;
 import br.com.cnec.estoqueti.exception.RegraNegocioException;
 import br.com.cnec.estoqueti.repository.CategoriaRepository;
 import org.springframework.stereotype.Service;
@@ -47,7 +49,7 @@ public class CategoriaService {
 
         return categoriaRepository.findById(id)
                 .orElseThrow(() ->
-                        new RegraNegocioException(
+                        new RecursoNaoEncontradoException(
                                 "Categoria não encontrada."
                         )
                 );
@@ -56,14 +58,14 @@ public class CategoriaService {
     private void validarExistencia(String nome) {
         if (categoriaRepository
                 .existsByNomeIgnoreCaseAndAtivoTrue(nome)) {
-            throw new RegraNegocioException(
+            throw new RecursoDuplicadoException(
                     "Já existe uma categoria ativa com esse nome."
             );
         }
 
         if (categoriaRepository
                 .existsByNomeIgnoreCaseAndAtivoFalse(nome)) {
-            throw new RegraNegocioException(
+            throw new RecursoDuplicadoException(
                     "Essa categoria já existe, mas está desativada."
             );
         }
