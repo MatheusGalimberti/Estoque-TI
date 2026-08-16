@@ -1,6 +1,8 @@
 package br.com.cnec.estoqueti.service;
 
 import br.com.cnec.estoqueti.entity.Condicao;
+import br.com.cnec.estoqueti.exception.RecursoDuplicadoException;
+import br.com.cnec.estoqueti.exception.RecursoNaoEncontradoException;
 import br.com.cnec.estoqueti.exception.RegraNegocioException;
 import br.com.cnec.estoqueti.repository.CondicaoRepository;
 import org.springframework.stereotype.Service;
@@ -51,7 +53,7 @@ public class CondicaoService {
 
         return condicaoRepository.findById(idCondicao)
                 .orElseThrow(
-                        () -> new RegraNegocioException(
+                        () -> new RecursoNaoEncontradoException(
                                 "Condição não encontrada."
                         )
                 );
@@ -99,7 +101,7 @@ public class CondicaoService {
         if (condicaoRepository
                 .existsByNomeIgnoreCaseAndAtivoTrue(nome)) {
 
-            throw new RegraNegocioException(
+            throw new RecursoDuplicadoException(
                     "Já existe uma condição ativa com esse nome."
             );
         }
@@ -107,7 +109,7 @@ public class CondicaoService {
         if (condicaoRepository
                 .existsByNomeIgnoreCaseAndAtivoFalse(nome)) {
 
-            throw new RegraNegocioException(
+            throw new RecursoDuplicadoException(
                     "Essa condição já existe, mas está desativada."
             );
         }
